@@ -4,6 +4,10 @@ import bodyParser from 'body-parser';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 // Recreate __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -14,10 +18,9 @@ const PORT = process.env.PORT ?? 3000;
 
 // Use the cors middleware
 app.use(cors({
-    origin: ['http://localhost:5173'], // Allow both frontend domain and localhost
+    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'], // Use CORS_ORIGIN from .env or default to localhost
     methods: ['GET', 'POST'], // Allow only specific methods
     allowedHeaders: ['Content-Type'], // Allow specific headers
-    // credentials: true, // Allow cookies or credentials
 }));
 
 app.use(bodyParser.json());
