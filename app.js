@@ -9,7 +9,7 @@ const PORT = process.env.PORT ?? 3000;
 
 // Use the cors middleware
 app.use(cors({
-    origin: ['https://your-frontend-domain.com', 'http://localhost:3000'], // Allow both frontend domain and localhost
+    origin: ['https://your-frontend-domain.com', 'http://localhost:5173'], // Allow both frontend domain and localhost
     methods: ['GET', 'POST'], // Allow only specific methods
     allowedHeaders: ['Content-Type'], // Allow specific headers
     // credentials: true, // Allow cookies or credentials
