@@ -21,7 +21,7 @@ const corsOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
 app.use(cors({
     origin: corsOrigin, // Use CORS_ORIGIN from .env or default to localhost
     methods: ['GET', 'POST'], // Allow only specific methods
-    allowedHeaders: ['Content-Type'], // Allow specific headers
+    // allowedHeaders: ['Content-Type'], // Allow specific headers
 }));
 
 app.use(bodyParser.json());
