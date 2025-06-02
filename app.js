@@ -15,10 +15,11 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
+const corsOrigin = process.env.CORS_ORIGIN ?? 'http://localhost:5173';
 
 // Use the cors middleware
 app.use(cors({
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'], // Use CORS_ORIGIN from .env or default to localhost
+    origin: corsOrigin, // Use CORS_ORIGIN from .env or default to localhost
     methods: ['GET', 'POST'], // Allow only specific methods
     allowedHeaders: ['Content-Type'], // Allow specific headers
 }));
