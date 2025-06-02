@@ -3,30 +3,35 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// Recreate __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 // Use the cors middleware
 app.use(cors({
-    origin: ['https://your-frontend-domain.com', 'http://localhost:5173'], // Allow both frontend domain and localhost
+    origin: ['http://localhost:5173'], // Allow both frontend domain and localhost
     methods: ['GET', 'POST'], // Allow only specific methods
     allowedHeaders: ['Content-Type'], // Allow specific headers
     // credentials: true, // Allow cookies or credentials
 }));
 
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/meals', async (req, res) => {
-    const mealsPath = path.resolve('data/available-meals.json');
+    const mealsPath = path.join(__dirname, 'data', 'available-meals.json');
     const meals = await fs.readFile(mealsPath, 'utf8');
     res.json(JSON.parse(meals));
 });
 
 app.post('/orders', async (req, res) => {
     try {
-        const ordersPath = path.resolve('data/orders.json');
+        const ordersPath = path.join(__dirname, 'data', 'orders.json');
         const orderData = req.body.order;
 
         if (!orderData || !orderData.items || orderData.items.length === 0) {
